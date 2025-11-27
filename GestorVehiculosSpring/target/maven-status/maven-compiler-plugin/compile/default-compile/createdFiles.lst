@@ -1,0 +1,4 @@
+com/example/gestorvehiculos/repository/VehiculoRepository.class
+com/example/gestorvehiculos/GestorVehiculosApplication.class
+com/example/gestorvehiculos/model/Vehiculo.class
+com/example/gestorvehiculos/controller/VehiculoController.class
