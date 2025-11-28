@@ -23,10 +23,7 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
         
-        h1 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
+        h1 { color: #667eea; margin-bottom: 10px; }
         
         .nav-link {
             display: inline-block;
@@ -39,9 +36,35 @@
             transition: background 0.3s;
         }
         
-        .nav-link:hover {
-            background: #667eea;
-            color: white;
+        .nav-link:hover { background: #667eea; color: white; }
+        
+        /* Mensajes de alerta */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #004085;
         }
         
         .form-section {
@@ -51,10 +74,7 @@
             margin-bottom: 30px;
         }
         
-        .form-section h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-        }
+        .form-section h2 { color: #667eea; margin-bottom: 20px; }
         
         form {
             display: grid;
@@ -62,10 +82,7 @@
             gap: 15px;
         }
         
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
+        .form-group { display: flex; flex-direction: column; }
         
         label {
             color: #555;
@@ -91,9 +108,7 @@
             gap: 10px;
         }
         
-        .checkbox-group input {
-            width: auto;
-        }
+        .checkbox-group input { width: auto; }
         
         button {
             grid-column: 1 / -1;
@@ -108,9 +123,7 @@
             transition: transform 0.2s;
         }
         
-        button:hover {
-            transform: translateY(-2px);
-        }
+        button:hover { transform: translateY(-2px); }
         
         table {
             width: 100%;
@@ -123,18 +136,9 @@
             color: white;
         }
         
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-        
-        tbody tr {
-            border-bottom: 1px solid #eee;
-        }
-        
-        tbody tr:hover {
-            background: #f8f9fa;
-        }
+        th, td { padding: 12px; text-align: left; }
+        tbody tr { border-bottom: 1px solid #eee; }
+        tbody tr:hover { background: #f8f9fa; }
         
         .badge {
             display: inline-block;
@@ -144,15 +148,8 @@
             font-weight: bold;
         }
         
-        .badge-conductor {
-            background: #28a745;
-            color: white;
-        }
-        
-        .badge-pasajero {
-            background: #17a2b8;
-            color: white;
-        }
+        .badge-conductor { background: #28a745; color: white; }
+        .badge-pasajero { background: #17a2b8; color: white; }
         
         .btn-eliminar {
             background: #dc3545;
@@ -163,8 +160,16 @@
             font-size: 0.9em;
         }
         
-        .btn-eliminar:hover {
-            background: #c82333;
+        .btn-eliminar:hover { background: #c82333; }
+        
+        .password-requirements {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #856404;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -175,8 +180,24 @@
         <a href="/viajes" class="nav-link">Viajes</a>
         <a href="/reservas" class="nav-link">Reservas</a>
         
+        <!-- Mensajes de éxito/error -->
+        <div th:if="${mensaje}" class="alert alert-success">
+            ✓ <span th:text="${mensaje}"></span>
+        </div>
+        <div th:if="${error}" class="alert alert-error">
+            ✗ <span th:text="${error}"></span>
+        </div>
+        
         <div class="form-section">
-            <h2>Registrar Nuevo Usuario</h2>
+            <h2>Registrar Nuevo Usuario (CU01)</h2>
+            
+            <div class="info-box">
+                <strong>📋 Validaciones del sistema:</strong><br>
+                • El correo institucional debe ser único (E1)<br>
+                • La contraseña debe tener mínimo 8 caracteres, un número y una mayúscula (E2)<br>
+                • Selecciona tu rol: Conductor, Pasajero o Ambos
+            </div>
+            
             <form th:action="@{/usuarios}" th:object="${usuario}" method="post">
                 <div class="form-group">
                     <label>Nombre:</label>
@@ -189,8 +210,19 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Email:</label>
-                    <input type="email" th:field="*{email}" required>
+                    <label>Correo Institucional:</label>
+                    <input type="email" th:field="*{email}" 
+                           placeholder="ejemplo@universidad.edu.co" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" name="password" 
+                           pattern="^(?=.*[0-9])(?=.*[A-Z]).{8,}$"
+                           placeholder="Mínimo 8 caracteres" required>
+                    <div class="password-requirements">
+                        Debe incluir: mínimo 8 caracteres, 1 número y 1 mayúscula
+                    </div>
                 </div>
                 
                 <div class="form-group">

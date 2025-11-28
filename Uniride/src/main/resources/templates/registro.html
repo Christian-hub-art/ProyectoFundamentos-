@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - UniRide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .registro-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            color: #004085;
+        }
+        
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+        
+        input, select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .password-requirements {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #856404;
+            margin-top: 5px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            cursor: pointer;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+        
+        .btn-registro {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn-registro:hover {
+            transform: translateY(-2px);
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 25px;
+            grid-column: 1 / -1;
+        }
+        
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 15px;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="registro-container">
+        <div class="logo">
+            <h1>🚗 UniRide</h1>
+            <p>Crea tu cuenta</p>
+        </div>
+        
+        <!-- Mensajes de error -->
+        <div th:if="${error}" class="alert alert-error">
+            ✗ <span th:text="${error}"></span>
+        </div>
+        
+        <div class="info-box">
+            <strong>📋 Requisitos (CU01):</strong><br>
+            • Correo institucional único<br>
+            • Contraseña: mínimo 8 caracteres, 1 número y 1 mayúscula<br>
+            • Selecciona tu rol: Conductor, Pasajero o Ambos
+        </div>
+        
+        <form th:action="@{/registro}" th:object="${usuario}" method="post">
+            <div class="form-group">
+                <label>Nombre *</label>
+                <input type="text" 
+                       th:field="*{nombre}" 
+                       placeholder="Juan"
+                       required>
+            </div>
+            
+            <div class="form-group">
+                <label>Apellido *</label>
+                <input type="text" 
+                       th:field="*{apellido}" 
+                       placeholder="Pérez"
+                       required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label>📧 Correo Institucional *</label>
+                <input type="email" 
+                       th:field="*{email}" 
+                       placeholder="ejemplo@universidad.edu.co"
+                       required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label>🔒 Contraseña *</label>
+                <input type="password" 
+                       name="password" 
+                       pattern="^(?=.*[0-9])(?=.*[A-Z]).{8,}$"
+                       placeholder="Mínimo 8 caracteres"
+                       required>
+                <div class="password-requirements">
+                    ⚠️ Debe incluir: mínimo 8 caracteres, 1 número y 1 mayúscula
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>📱 Teléfono *</label>
+                <input type="tel" 
+                       th:field="*{telefono}" 
+                       placeholder="3001234567"
+                       required>
+            </div>
+            
+            <div class="form-group">
+                <label>🎓 Universidad *</label>
+                <input type="text" 
+                       th:field="*{universidad}" 
+                       placeholder="Universidad Nacional"
+                       required>
+            </div>
+            
+            <div class="form-group full-width">
+                <label>📚 Carrera *</label>
+                <input type="text" 
+                       th:field="*{carrera}" 
+                       placeholder="Ingeniería de Sistemas"
+                       required>
+            </div>
+            
+            <div class="form-group full-width checkbox-group">
+                <input type="checkbox" 
+                       th:field="*{esConductor}" 
+                       id="esConductor">
+                <label for="esConductor">
+                    🚗 Soy conductor (tengo vehículo y quiero ofrecer viajes)
+                </label>
+            </div>
+            
+            <button type="submit" class="btn-registro">
+                ✨ Crear mi cuenta
+            </button>
+            
+            <div class="links">
+                <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+                <a href="/">← Volver al inicio</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

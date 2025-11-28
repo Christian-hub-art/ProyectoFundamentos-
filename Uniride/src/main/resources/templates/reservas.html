@@ -37,6 +37,35 @@
         
         .nav-link:hover { background: #667eea; color: white; }
         
+        /* Mensajes de alerta */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #004085;
+        }
+        
         .form-section {
             background: #f8f9fa;
             padding: 25px;
@@ -98,7 +127,6 @@
         }
         
         th, td { padding: 12px; text-align: left; }
-        
         tbody tr { border-bottom: 1px solid #eee; }
         tbody tr:hover { background: #f8f9fa; }
         
@@ -145,12 +173,28 @@
         <a href="/usuarios" class="nav-link">Usuarios</a>
         <a href="/viajes" class="nav-link">Viajes</a>
         
+        <!-- Mensajes de éxito/error -->
+        <div th:if="${mensaje}" class="alert alert-success">
+            ✓ <span th:text="${mensaje}"></span>
+        </div>
+        <div th:if="${error}" class="alert alert-error">
+            ✗ <span th:text="${error}"></span>
+        </div>
+        
         <div th:if="${#lists.isEmpty(viajes)}" class="warning">
             ⚠️ <strong>No hay viajes disponibles.</strong> Primero debes crear viajes desde la sección "Gestionar Viajes".
         </div>
         
         <div class="form-section" th:if="${not #lists.isEmpty(viajes)}">
-            <h2>Crear Nueva Reserva</h2>
+            <h2>Crear Nueva Reserva (CU05)</h2>
+            
+            <div class="info-box">
+                <strong>📋 Validaciones del sistema:</strong><br>
+                • El viaje debe tener asientos disponibles (E1)<br>
+                • El viaje no debe estar cancelado (E2)<br>
+                • Los asientos reservados no pueden exceder la disponibilidad
+            </div>
+            
             <form th:action="@{/reservas}" method="post">
                 <div class="form-group">
                     <label>Viaje:</label>
@@ -177,11 +221,11 @@
                     <input type="number" name="asientosReservados" min="1" max="4" value="1" required>
                 </div>
                 
-                <button type="submit">✓ Confirmar Reserva</button>
+                <button type="submit">✔ Confirmar Reserva</button>
             </form>
         </div>
         
-        <h2>📋 Reservas Activas</h2>
+        <h2>📋 Reservas Activas (CU09)</h2>
         
         <table>
             <thead>
@@ -216,11 +260,12 @@
                         <span th:if="${r.estado == 'COMPLETADA'}" class="badge badge-completada">Completada</span>
                     </td>
                     <td class="actions">
+                        <!-- CU06 - Cancelar Reserva -->
                         <a th:href="@{'/reservas/cancelar/' + ${r.id}}" 
                            class="btn btn-cancelar"
-                           th:if="${r.estado == 'CONFIRMADA'}"
-                           onclick="return confirm('¿Cancelar esta reserva?')">
-                            ❌ Cancelar
+                           th:if="${r.estado == 'CONFIRMADA' || r.estado == 'PENDIENTE'}"
+                           onclick="return confirm('¿Cancelar esta reserva? Los asientos serán restaurados.')">
+                            ✖ Cancelar
                         </a>
                         <a th:href="@{'/reservas/eliminar/' + ${r.id}}" 
                            class="btn btn-eliminar"

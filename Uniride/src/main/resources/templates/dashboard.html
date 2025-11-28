@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Panel - UniRide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        nav h1 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .user-info span {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .btn-logout {
+            background: #dc3545;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .btn-logout:hover {
+            background: #c82333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .welcome-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .welcome-card h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-item strong {
+            color: #667eea;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .badge-conductor {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-pasajero {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .action-card h3 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin: 15px 0;
+        }
+        
+        .action-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .btn-action {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-2px);
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>🚗 UniRide</h1>
+            <div class="user-info">
+                <span>👤 <span th:text="${usuario.nombreCompleto}"></span></span>
+                <a href="/logout" class="btn-logout">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div th:if="${mensaje}" class="alert alert-success">
+            ✓ <span th:text="${mensaje}"></span>
+        </div>
+        
+        <div class="welcome-card">
+            <h2>¡Hola, <span th:text="${usuario.nombre}"></span>! 👋</h2>
+            <p style="font-size: 1.2em; color: #666;">Bienvenido a tu panel de UniRide</p>
+            
+            <div class="user-details">
+                <div class="detail-item">
+                    <strong>📧 Email:</strong>
+                    <span th:text="${usuario.email}"></span>
+                </div>
+                <div class="detail-item">
+                    <strong>📱 Teléfono:</strong>
+                    <span th:text="${usuario.telefono}"></span>
+                </div>
+                <div class="detail-item">
+                    <strong>🎓 Universidad:</strong>
+                    <span th:text="${usuario.universidad}"></span>
+                </div>
+                <div class="detail-item">
+                    <strong>📚 Carrera:</strong>
+                    <span th:text="${usuario.carrera}"></span>
+                </div>
+                <div class="detail-item">
+                    <strong>👤 Tipo:</strong>
+                    <span th:if="${usuario.esConductor}" class="badge badge-conductor">Conductor</span>
+                    <span th:unless="${usuario.esConductor}" class="badge badge-pasajero">Pasajero</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions-grid">
+            <div class="action-card">
+                <div style="font-size: 3em;">🔍</div>
+                <h3>Buscar Viajes</h3>
+                <p>Encuentra viajes disponibles hacia tu destino</p>
+                <a href="/buscar" class="btn-action">Buscar Ahora</a>
+            </div>
+            
+            <div class="action-card" th:if="${usuario.esConductor}">
+                <div style="font-size: 3em;">🚗</div>
+                <h3>Publicar Viaje</h3>
+                <p>Ofrece un viaje y comparte gastos</p>
+                <a href="/viajes" class="btn-action">Publicar Viaje</a>
+            </div>
+            
+            <div class="action-card">
+                <div style="font-size: 3em;">🎫</div>
+                <h3>Mis Reservas</h3>
+                <p>Ver y gestionar tus reservas</p>
+                <a th:href="@{'/mis-reservas/' + ${usuario.id}}" class="btn-action">Ver Reservas</a>
+            </div>
+            
+            <div class="action-card" th:if="${usuario.esConductor}">
+                <div style="font-size: 3em;">🗺️</div>
+                <h3>Mis Viajes</h3>
+                <p>Administra los viajes que has publicado</p>
+                <a th:href="@{'/mis-viajes/' + ${usuario.id}}" class="btn-action">Ver Mis Viajes</a>
+            </div>
+            
+            <div class="action-card">
+                <div style="font-size: 3em;">👥</div>
+                <h3>Gestión</h3>
+                <p>Administrar usuarios y sistema</p>
+                <a href="/usuarios" class="btn-action">Ir a Gestión</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
