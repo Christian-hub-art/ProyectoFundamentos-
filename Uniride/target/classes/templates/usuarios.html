@@ -175,7 +175,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>👥 Gestión de Usuarios</h1>
+        <h1> Gestión de Usuarios</h1>
         <a href="/" class="nav-link">← Volver al inicio</a>
         <a href="/viajes" class="nav-link">Viajes</a>
         <a href="/reservas" class="nav-link">Reservas</a>
@@ -192,7 +192,7 @@
             <h2>Registrar Nuevo Usuario (CU01)</h2>
             
             <div class="info-box">
-                <strong>📋 Validaciones del sistema:</strong><br>
+                <strong> Validaciones del sistema:</strong><br>
                 • El correo institucional debe ser único (E1)<br>
                 • La contraseña debe tener mínimo 8 caracteres, un número y una mayúscula (E2)<br>
                 • Selecciona tu rol: Conductor, Pasajero o Ambos
@@ -242,14 +242,14 @@
                 
                 <div class="form-group checkbox-group">
                     <input type="checkbox" th:field="*{esConductor}" id="esConductor">
-                    <label for="esConductor">🚗 Soy conductor (tengo vehículo)</label>
+                    <label for="esConductor"> Soy conductor (tengo vehículo)</label>
                 </div>
                 
-                <button type="submit">➕ Registrar Usuario</button>
+                <button type="submit"> Registrar Usuario</button>
             </form>
         </div>
         
-        <h2>📋 Lista de Usuarios Registrados</h2>
+        <h2> Lista de Usuarios Registrados</h2>
         
         <table>
             <thead>
@@ -280,7 +280,7 @@
                         <a th:href="@{'/usuarios/eliminar/' + ${u.id}}" 
                            class="btn-eliminar"
                            onclick="return confirm('¿Eliminar este usuario?')">
-                            🗑️ Eliminar
+                             Eliminar
                         </a>
                     </td>
                 </tr>

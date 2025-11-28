@@ -175,13 +175,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔍 Buscar Viajes</h1>
+        <h1> Buscar Viajes</h1>
         <a href="/" class="nav-link">← Volver al inicio</a>
         
         <div class="search-section">
             <form th:action="@{/buscar}" method="post" class="search-form">
                 <div class="form-group">
-                    <label>📍 Origen:</label>
+                    <label> Origen:</label>
                     <input type="text" name="origen" 
                            th:value="${origen}" 
                            placeholder="¿Desde dónde viajas?" 
@@ -189,14 +189,14 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>🎯 Destino:</label>
+                    <label> Destino:</label>
                     <input type="text" name="destino" 
                            th:value="${destino}" 
                            placeholder="¿A dónde vas?" 
                            required>
                 </div>
                 
-                <button type="submit">🔍 Buscar</button>
+                <button type="submit"> Buscar</button>
             </form>
         </div>
         
@@ -205,19 +205,19 @@
                 Resultados para: <span th:text="${origen}"></span> → <span th:text="${destino}"></span>
             </h2>
             <h2 th:unless="${origen != null and destino != null}">
-                ✨ Todos los Viajes Disponibles
+                 Todos los Viajes Disponibles
             </h2>
             
             <div th:if="${#lists.isEmpty(viajes)}" class="empty-state">
-                <h3>😔 No se encontraron viajes</h3>
+                <h3> No se encontraron viajes</h3>
                 <p>Intenta con otros lugares o revisa más tarde</p>
             </div>
             
             <div th:each="viaje : ${viajes}" class="viaje-card">
                 <div class="viaje-header">
                     <div class="ruta">
-                        📍 <span th:text="${viaje.origen}"></span> → 
-                        🎯 <span th:text="${viaje.destino}"></span>
+                         <span th:text="${viaje.origen}"></span> → 
+                         <span th:text="${viaje.destino}"></span>
                     </div>
                     <div class="precio">
                         $<span th:text="${viaje.precio}"></span>
@@ -226,29 +226,29 @@
                 
                 <div class="viaje-info">
                     <div class="info-item">
-                        <strong>👤 Conductor:</strong>
+                        <strong> Conductor:</strong>
                         <span th:text="${viaje.conductor.nombreCompleto}"></span>
                     </div>
                     <div class="info-item">
-                        <strong>📞 Teléfono:</strong>
+                        <strong> Teléfono:</strong>
                         <span th:text="${viaje.conductor.telefono}"></span>
                     </div>
                     <div class="info-item">
-                        <strong>🪑 Asientos disponibles:</strong>
+                        <strong> Asientos disponibles:</strong>
                         <span th:text="${viaje.asientosDisponibles}"></span>
                     </div>
                     <div class="info-item">
-                        <strong>📅 Fecha y hora:</strong>
+                        <strong> Fecha y hora:</strong>
                         <span th:text="${#temporals.format(viaje.fechaHora, 'dd/MM/yyyy HH:mm')}"></span>
                     </div>
                     <div class="info-item">
-                        <strong>🎓 Universidad:</strong>
+                        <strong> Universidad:</strong>
                         <span th:text="${viaje.conductor.universidad}"></span>
                     </div>
                 </div>
                 
                 <div th:if="${viaje.descripcion}" class="descripcion">
-                    <strong>💬 Información adicional:</strong><br>
+                    <strong> Información adicional:</strong><br>
                     <span th:text="${viaje.descripcion}"></span>
                 </div>
             </div>

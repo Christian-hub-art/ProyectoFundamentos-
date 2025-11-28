@@ -116,16 +116,16 @@
         <a href="/dashboard" class="nav-link">← Volver al Dashboard</a>
         
         <div th:if="${#lists.isEmpty(reservas)}" class="empty-state">
-            <h3 style="font-size: 2em; margin-bottom: 15px;">😔 No tienes reservas aún</h3>
+            <h3 style="font-size: 2em; margin-bottom: 15px;"> No tienes reservas aún</h3>
             <p style="font-size: 1.2em;">¡Busca viajes disponibles y haz tu primera reserva!</p>
-            <a href="/buscar" class="nav-link" style="margin-top: 20px;">🔍 Buscar Viajes</a>
+            <a href="/buscar" class="nav-link" style="margin-top: 20px;"> Buscar Viajes</a>
         </div>
         
         <div th:each="r : ${reservas}" class="reserva-card">
             <div class="reserva-header">
                 <div class="ruta">
-                    📍 <span th:text="${r.viaje.origen}"></span> → 
-                    🎯 <span th:text="${r.viaje.destino}"></span>
+                     <span th:text="${r.viaje.origen}"></span> → 
+                     <span th:text="${r.viaje.destino}"></span>
                 </div>
                 <span th:if="${r.estado == 'CONFIRMADA'}" class="badge badge-confirmada">Confirmada</span>
                 <span th:if="${r.estado == 'CANCELADA'}" class="badge badge-cancelada">Cancelada</span>
@@ -134,27 +134,27 @@
             
             <div class="reserva-info">
                 <div class="info-item">
-                    <strong>🚗 Conductor:</strong>
+                    <strong> Conductor:</strong>
                     <span th:text="${r.viaje.conductor.nombreCompleto}"></span>
                 </div>
                 <div class="info-item">
-                    <strong>📞 Teléfono:</strong>
+                    <strong> Teléfono:</strong>
                     <span th:text="${r.viaje.conductor.telefono}"></span>
                 </div>
                 <div class="info-item">
-                    <strong>🪑 Asientos:</strong>
+                    <strong> Asientos:</strong>
                     <span th:text="${r.asientosReservados}"></span>
                 </div>
                 <div class="info-item">
-                    <strong>💰 Total:</strong>
+                    <strong> Total:</strong>
                     $<span th:text="${r.asientosReservados * r.viaje.precio}"></span>
                 </div>
                 <div class="info-item">
-                    <strong>📅 Fecha viaje:</strong>
+                    <strong> Fecha viaje:</strong>
                     <span th:text="${#temporals.format(r.viaje.fechaHora, 'dd/MM/yyyy HH:mm')}"></span>
                 </div>
                 <div class="info-item">
-                    <strong>🕐 Reservado:</strong>
+                    <strong> Reservado:</strong>
                     <span th:text="${#temporals.format(r.fechaReserva, 'dd/MM/yyyy HH:mm')}"></span>
                 </div>
             </div>

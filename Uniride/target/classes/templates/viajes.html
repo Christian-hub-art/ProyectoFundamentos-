@@ -157,7 +157,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚗 Gestión de Viajes</h1>
+        <h1> Gestión de Viajes</h1>
         <a href="/" class="nav-link">← Volver al inicio</a>
         <a href="/usuarios" class="nav-link">Usuarios</a>
         <a href="/reservas" class="nav-link">Reservas</a>
@@ -171,7 +171,7 @@
         </div>
         
         <div class="form-section">
-            <h2>Publicar Nuevo Viaje (CU03)</h2>
+            <h2>Publicar Nuevo Viaje </h2>
             <form th:action="@{/viajes}" method="post">
                 <div class="form-group">
                     <label>Conductor:</label>
@@ -213,11 +213,11 @@
                     <textarea name="descripcion" placeholder="Ej: Salgo de la universidad después de clases..."></textarea>
                 </div>
                 
-                <button type="submit">🚀 Publicar Viaje</button>
+                <button type="submit"> Publicar Viaje</button>
             </form>
         </div>
         
-        <h2>📋 Viajes Registrados (CU10)</h2>
+        <h2> Viajes Registrados </h2>
         
         <table>
             <thead>
@@ -269,7 +269,7 @@
                         <a th:href="@{'/viajes/eliminar/' + ${v.id}}" 
                            class="btn btn-eliminar"
                            onclick="return confirm('¿Eliminar este viaje?')">
-                            🗑️ Eliminar
+                             Eliminar
                         </a>
                     </td>
                 </tr>

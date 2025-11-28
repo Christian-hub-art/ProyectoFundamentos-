@@ -188,7 +188,7 @@
 <body>
     <nav>
         <div class="container">
-            <h1>🚗 UniRide</h1>
+            <h1>UniRide</h1>
             <ul>
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/buscar">Buscar Viajes</a></li>
@@ -200,23 +200,23 @@
     </nav>
 
     <div class="hero">
-        <h2>🎓 Transporte Compartido para Estudiantes</h2>
+        <h2>Transporte Compartido para Estudiantes</h2>
         <p>Ahorra dinero, haz amigos y cuida el planeta</p>
     </div>
 
     <div class="container">
         <div class="viajes-disponibles">
-            <h3>✨ Viajes Disponibles Ahora</h3>
+            <h3>Viajes Disponibles Ahora</h3>
             
             <div th:if="${#lists.isEmpty(viajes)}" class="empty-state">
-                <h4>😔 No hay viajes disponibles en este momento</h4>
+                <h4>No hay viajes disponibles en este momento</h4>
                 <p>¡Sé el primero en publicar un viaje!</p>
             </div>
             
             <div th:each="viaje : ${viajes}" class="viaje-card">
                 <div class="viaje-header">
                     <div class="ruta">
-                        📍 <span th:text="${viaje.origen}"></span> → 
+                          <span th:text="${viaje.origen}"></span> → 
                         <span th:text="${viaje.destino}"></span>
                     </div>
                     <div class="precio">
@@ -226,15 +226,15 @@
                 
                 <div class="viaje-info">
                     <div class="info-item">
-                        <strong>👤 Conductor:</strong>
+                        <strong>Conductor:</strong>
                         <span th:text="${viaje.conductor.nombreCompleto}"></span>
                     </div>
                     <div class="info-item">
-                        <strong>🪑 Asientos:</strong>
+                        <strong>Asientos:</strong>
                         <span th:text="${viaje.asientosDisponibles}"></span>
                     </div>
                     <div class="info-item">
-                        <strong>📅 Fecha:</strong>
+                        <strong>Fecha:</strong>
                         <span th:text="${#temporals.format(viaje.fechaHora, 'dd/MM/yyyy HH:mm')}"></span>
                     </div>
                     <div class="info-item">
@@ -244,7 +244,7 @@
                 </div>
                 
                 <div th:if="${viaje.descripcion}" style="margin-top: 15px; color: #666;">
-                    💬 <span th:text="${viaje.descripcion}"></span>
+                    <span th:text="${viaje.descripcion}"></span>
                 </div>
             </div>
         </div>

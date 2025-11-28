@@ -117,19 +117,19 @@
     <div class="container">
         <h1>🗺️ Mis Viajes (CU10)</h1>
         <a href="/dashboard" class="nav-link">← Volver al Dashboard</a>
-        <a href="/viajes" class="nav-link">➕ Publicar Nuevo Viaje</a>
+        <a href="/viajes" class="nav-link"> Publicar Nuevo Viaje</a>
         
         <div th:if="${#lists.isEmpty(viajes)}" class="empty-state">
-            <h3 style="font-size: 2em; margin-bottom: 15px;">😔 No has publicado viajes aún</h3>
+            <h3 style="font-size: 2em; margin-bottom: 15px;"> No has publicado viajes aún</h3>
             <p style="font-size: 1.2em;">¡Comparte tus trayectos y ayuda a otros estudiantes!</p>
-            <a href="/viajes" class="nav-link" style="margin-top: 20px;">🚗 Publicar Viaje</a>
+            <a href="/viajes" class="nav-link" style="margin-top: 20px;"> Publicar Viaje</a>
         </div>
         
         <div th:each="v : ${viajes}" class="viaje-card">
             <div class="viaje-header">
                 <div class="ruta">
-                    📍 <span th:text="${v.origen}"></span> → 
-                    🎯 <span th:text="${v.destino}"></span>
+                     <span th:text="${v.origen}"></span> → 
+                     <span th:text="${v.destino}"></span>
                 </div>
                 <span th:if="${v.estado == 'DISPONIBLE'}" class="badge badge-disponible">Disponible</span>
                 <span th:if="${v.estado == 'COMPLETO'}" class="badge badge-completo">Completo</span>
@@ -139,21 +139,21 @@
             
             <div class="viaje-info">
                 <div class="info-item">
-                    <strong>📅 Fecha:</strong>
+                    <strong> Fecha:</strong>
                     <span th:text="${#temporals.format(v.fechaHora, 'dd/MM/yyyy HH:mm')}"></span>
                 </div>
                 <div class="info-item">
-                    <strong>🪑 Asientos:</strong>
+                    <strong> Asientos:</strong>
                     <span th:text="${v.asientosDisponibles}"></span>
                 </div>
                 <div class="info-item">
-                    <strong>💰 Precio:</strong>
+                    <strong> Precio:</strong>
                     $<span th:text="${v.precio}"></span>
                 </div>
             </div>
             
             <div th:if="${v.descripcion}" style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px; color: #666;">
-                💬 <span th:text="${v.descripcion}"></span>
+                 <span th:text="${v.descripcion}"></span>
             </div>
             
             <div class="actions">

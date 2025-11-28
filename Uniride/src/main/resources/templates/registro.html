@@ -163,7 +163,7 @@
 <body>
     <div class="registro-container">
         <div class="logo">
-            <h1>🚗 UniRide</h1>
+            <h1> UniRide</h1>
             <p>Crea tu cuenta</p>
         </div>
         
@@ -173,7 +173,7 @@
         </div>
         
         <div class="info-box">
-            <strong>📋 Requisitos (CU01):</strong><br>
+            <strong> Requisitos (CU01):</strong><br>
             • Correo institucional único<br>
             • Contraseña: mínimo 8 caracteres, 1 número y 1 mayúscula<br>
             • Selecciona tu rol: Conductor, Pasajero o Ambos
@@ -197,7 +197,7 @@
             </div>
             
             <div class="form-group full-width">
-                <label>📧 Correo Institucional *</label>
+                <label> Correo Institucional *</label>
                 <input type="email" 
                        th:field="*{email}" 
                        placeholder="ejemplo@universidad.edu.co"
@@ -205,19 +205,19 @@
             </div>
             
             <div class="form-group full-width">
-                <label>🔒 Contraseña *</label>
+                <label> Contraseña *</label>
                 <input type="password" 
                        name="password" 
                        pattern="^(?=.*[0-9])(?=.*[A-Z]).{8,}$"
                        placeholder="Mínimo 8 caracteres"
                        required>
                 <div class="password-requirements">
-                    ⚠️ Debe incluir: mínimo 8 caracteres, 1 número y 1 mayúscula
+                     Debe incluir: mínimo 8 caracteres, 1 número y 1 mayúscula
                 </div>
             </div>
             
             <div class="form-group">
-                <label>📱 Teléfono *</label>
+                <label> Teléfono *</label>
                 <input type="tel" 
                        th:field="*{telefono}" 
                        placeholder="3001234567"
@@ -225,7 +225,7 @@
             </div>
             
             <div class="form-group">
-                <label>🎓 Universidad *</label>
+                <label> Universidad *</label>
                 <input type="text" 
                        th:field="*{universidad}" 
                        placeholder="Universidad Nacional"
@@ -233,7 +233,7 @@
             </div>
             
             <div class="form-group full-width">
-                <label>📚 Carrera *</label>
+                <label> Carrera *</label>
                 <input type="text" 
                        th:field="*{carrera}" 
                        placeholder="Ingeniería de Sistemas"
@@ -245,12 +245,12 @@
                        th:field="*{esConductor}" 
                        id="esConductor">
                 <label for="esConductor">
-                    🚗 Soy conductor (tengo vehículo y quiero ofrecer viajes)
+                     Soy conductor (tengo vehículo y quiero ofrecer viajes)
                 </label>
             </div>
             
             <button type="submit" class="btn-registro">
-                ✨ Crear mi cuenta
+                 Crear mi cuenta
             </button>
             
             <div class="links">

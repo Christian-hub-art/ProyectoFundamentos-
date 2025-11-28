@@ -178,9 +178,9 @@
 <body>
     <nav>
         <div class="container">
-            <h1>🚗 UniRide</h1>
+            <h1> UniRide</h1>
             <div class="user-info">
-                <span>👤 <span th:text="${usuario.nombreCompleto}"></span></span>
+                <span> <span th:text="${usuario.nombreCompleto}"></span></span>
                 <a href="/logout" class="btn-logout">Cerrar Sesión</a>
             </div>
         </div>
@@ -192,28 +192,28 @@
         </div>
         
         <div class="welcome-card">
-            <h2>¡Hola, <span th:text="${usuario.nombre}"></span>! 👋</h2>
+            <h2>¡Hola, <span th:text="${usuario.nombre}"></span>! </h2>
             <p style="font-size: 1.2em; color: #666;">Bienvenido a tu panel de UniRide</p>
             
             <div class="user-details">
                 <div class="detail-item">
-                    <strong>📧 Email:</strong>
+                    <strong> Email:</strong>
                     <span th:text="${usuario.email}"></span>
                 </div>
                 <div class="detail-item">
-                    <strong>📱 Teléfono:</strong>
+                    <strong> Teléfono:</strong>
                     <span th:text="${usuario.telefono}"></span>
                 </div>
                 <div class="detail-item">
-                    <strong>🎓 Universidad:</strong>
+                    <strong> Universidad:</strong>
                     <span th:text="${usuario.universidad}"></span>
                 </div>
                 <div class="detail-item">
-                    <strong>📚 Carrera:</strong>
+                    <strong> Carrera:</strong>
                     <span th:text="${usuario.carrera}"></span>
                 </div>
                 <div class="detail-item">
-                    <strong>👤 Tipo:</strong>
+                    <strong> Tipo:</strong>
                     <span th:if="${usuario.esConductor}" class="badge badge-conductor">Conductor</span>
                     <span th:unless="${usuario.esConductor}" class="badge badge-pasajero">Pasajero</span>
                 </div>
@@ -222,35 +222,35 @@
         
         <div class="actions-grid">
             <div class="action-card">
-                <div style="font-size: 3em;">🔍</div>
+                <div style="font-size: 3em;"></div>
                 <h3>Buscar Viajes</h3>
                 <p>Encuentra viajes disponibles hacia tu destino</p>
                 <a href="/buscar" class="btn-action">Buscar Ahora</a>
             </div>
             
             <div class="action-card" th:if="${usuario.esConductor}">
-                <div style="font-size: 3em;">🚗</div>
+                <div style="font-size: 3em;"></div>
                 <h3>Publicar Viaje</h3>
                 <p>Ofrece un viaje y comparte gastos</p>
                 <a href="/viajes" class="btn-action">Publicar Viaje</a>
             </div>
             
             <div class="action-card">
-                <div style="font-size: 3em;">🎫</div>
+                <div style="font-size: 3em;"></div>
                 <h3>Mis Reservas</h3>
                 <p>Ver y gestionar tus reservas</p>
                 <a th:href="@{'/mis-reservas/' + ${usuario.id}}" class="btn-action">Ver Reservas</a>
             </div>
             
             <div class="action-card" th:if="${usuario.esConductor}">
-                <div style="font-size: 3em;">🗺️</div>
+                <div style="font-size: 3em;"></div>
                 <h3>Mis Viajes</h3>
                 <p>Administra los viajes que has publicado</p>
                 <a th:href="@{'/mis-viajes/' + ${usuario.id}}" class="btn-action">Ver Mis Viajes</a>
             </div>
             
             <div class="action-card">
-                <div style="font-size: 3em;">👥</div>
+                <div style="font-size: 3em;"></div>
                 <h3>Gestión</h3>
                 <p>Administrar usuarios y sistema</p>
                 <a href="/usuarios" class="btn-action">Ir a Gestión</a>
