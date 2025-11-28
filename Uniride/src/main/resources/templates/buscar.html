@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Viajes - UniRide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 { color: #667eea; margin-bottom: 10px; }
+        
+        .nav-link {
+            display: inline-block;
+            margin: 10px 10px 30px 0;
+            padding: 8px 15px;
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .nav-link:hover { background: #667eea; color: white; }
+        
+        .search-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+        
+        .form-group { display: flex; flex-direction: column; }
+        
+        label {
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        input {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover { transform: translateY(-2px); }
+        
+        .results-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .viaje-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .viaje-card:hover { transform: translateY(-5px); }
+        
+        .viaje-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .ruta {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .precio {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .viaje-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+        }
+        
+        .info-item strong { color: #667eea; }
+        
+        .descripcion {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            color: #666;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #999;
+        }
+        
+        .empty-state h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state p { font-size: 1.2em; }
+        
+        @media (max-width: 768px) {
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .viaje-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Buscar Viajes</h1>
+        <a href="/" class="nav-link">← Volver al inicio</a>
+        
+        <div class="search-section">
+            <form th:action="@{/buscar}" method="post" class="search-form">
+                <div class="form-group">
+                    <label>📍 Origen:</label>
+                    <input type="text" name="origen" 
+                           th:value="${origen}" 
+                           placeholder="¿Desde dónde viajas?" 
+                           required>
+                </div>
+                
+                <div class="form-group">
+                    <label>🎯 Destino:</label>
+                    <input type="text" name="destino" 
+                           th:value="${destino}" 
+                           placeholder="¿A dónde vas?" 
+                           required>
+                </div>
+                
+                <button type="submit">🔍 Buscar</button>
+            </form>
+        </div>
+        
+        <div class="results-section">
+            <h2 th:if="${origen != null and destino != null}">
+                Resultados para: <span th:text="${origen}"></span> → <span th:text="${destino}"></span>
+            </h2>
+            <h2 th:unless="${origen != null and destino != null}">
+                ✨ Todos los Viajes Disponibles
+            </h2>
+            
+            <div th:if="${#lists.isEmpty(viajes)}" class="empty-state">
+                <h3>😔 No se encontraron viajes</h3>
+                <p>Intenta con otros lugares o revisa más tarde</p>
+            </div>
+            
+            <div th:each="viaje : ${viajes}" class="viaje-card">
+                <div class="viaje-header">
+                    <div class="ruta">
+                        📍 <span th:text="${viaje.origen}"></span> → 
+                        🎯 <span th:text="${viaje.destino}"></span>
+                    </div>
+                    <div class="precio">
+                        $<span th:text="${viaje.precio}"></span>
+                    </div>
+                </div>
+                
+                <div class="viaje-info">
+                    <div class="info-item">
+                        <strong>👤 Conductor:</strong>
+                        <span th:text="${viaje.conductor.nombreCompleto}"></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>📞 Teléfono:</strong>
+                        <span th:text="${viaje.conductor.telefono}"></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>🪑 Asientos disponibles:</strong>
+                        <span th:text="${viaje.asientosDisponibles}"></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>📅 Fecha y hora:</strong>
+                        <span th:text="${#temporals.format(viaje.fechaHora, 'dd/MM/yyyy HH:mm')}"></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>🎓 Universidad:</strong>
+                        <span th:text="${viaje.conductor.universidad}"></span>
+                    </div>
+                </div>
+                
+                <div th:if="${viaje.descripcion}" class="descripcion">
+                    <strong>💬 Información adicional:</strong><br>
+                    <span th:text="${viaje.descripcion}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

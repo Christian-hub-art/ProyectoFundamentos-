@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios - UniRide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .nav-link {
+            display: inline-block;
+            margin: 10px 10px 30px 0;
+            padding: 8px 15px;
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        input, select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+        }
+        
+        button {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .badge-conductor {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-pasajero {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .btn-eliminar:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👥 Gestión de Usuarios</h1>
+        <a href="/" class="nav-link">← Volver al inicio</a>
+        <a href="/viajes" class="nav-link">Viajes</a>
+        <a href="/reservas" class="nav-link">Reservas</a>
+        
+        <div class="form-section">
+            <h2>Registrar Nuevo Usuario</h2>
+            <form th:action="@{/usuarios}" th:object="${usuario}" method="post">
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" th:field="*{nombre}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Apellido:</label>
+                    <input type="text" th:field="*{apellido}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" th:field="*{email}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="tel" th:field="*{telefono}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Universidad:</label>
+                    <input type="text" th:field="*{universidad}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Carrera:</label>
+                    <input type="text" th:field="*{carrera}" required>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" th:field="*{esConductor}" id="esConductor">
+                    <label for="esConductor">🚗 Soy conductor (tengo vehículo)</label>
+                </div>
+                
+                <button type="submit">➕ Registrar Usuario</button>
+            </form>
+        </div>
+        
+        <h2>📋 Lista de Usuarios Registrados</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Universidad</th>
+                    <th>Carrera</th>
+                    <th>Tipo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="u : ${usuarios}">
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.nombreCompleto}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.telefono}"></td>
+                    <td th:text="${u.universidad}"></td>
+                    <td th:text="${u.carrera}"></td>
+                    <td>
+                        <span th:if="${u.esConductor}" class="badge badge-conductor">Conductor</span>
+                        <span th:unless="${u.esConductor}" class="badge badge-pasajero">Pasajero</span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/usuarios/eliminar/' + ${u.id}}" 
+                           class="btn-eliminar"
+                           onclick="return confirm('¿Eliminar este usuario?')">
+                            🗑️ Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

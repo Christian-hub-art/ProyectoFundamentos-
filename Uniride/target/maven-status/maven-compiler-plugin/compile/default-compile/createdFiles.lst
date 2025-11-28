@@ -1,0 +1,8 @@
+com/uniride/repository/ViajeRepository.class
+com/uniride/model/Reserva.class
+com/uniride/repository/ReservaRepository.class
+com/uniride/model/Usuario.class
+com/uniride/repository/UsuarioRepository.class
+com/uniride/model/Viaje.class
+com/uniride/UniRideApplication.class
+com/uniride/controller/MainController.class

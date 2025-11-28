@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Viajes - UniRide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .nav-link {
+            display: inline-block;
+            margin: 10px 10px 30px 0;
+            padding: 8px 15px;
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .nav-link:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        input, select, textarea {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .badge-disponible {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-completo {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .badge-cancelado {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85em;
+            color: white;
+        }
+        
+        .btn-estado {
+            background: #17a2b8;
+        }
+        
+        .btn-eliminar {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Gestión de Viajes</h1>
+        <a href="/" class="nav-link">← Volver al inicio</a>
+        <a href="/usuarios" class="nav-link">Usuarios</a>
+        <a href="/reservas" class="nav-link">Reservas</a>
+        
+        <div class="form-section">
+            <h2>Publicar Nuevo Viaje</h2>
+            <form th:action="@{/viajes}" method="post">
+                <div class="form-group">
+                    <label>Conductor:</label>
+                    <select name="conductorId" required>
+                        <option value="">Seleccionar conductor...</option>
+                        <option th:each="c : ${conductores}" 
+                                th:value="${c.id}" 
+                                th:text="${c.nombreCompleto}"></option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Origen:</label>
+                    <input type="text" name="origen" placeholder="Ej: Universidad Nacional" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Destino:</label>
+                    <input type="text" name="destino" placeholder="Ej: Centro Comercial" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Fecha y Hora:</label>
+                    <input type="datetime-local" name="fechaHora" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Asientos Disponibles:</label>
+                    <input type="number" name="asientosDisponibles" min="1" max="8" value="4" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Precio (por persona):</label>
+                    <input type="number" name="precio" step="0.01" min="0" placeholder="5000" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Descripción (opcional):</label>
+                    <textarea name="descripcion" placeholder="Ej: Salgo de la universidad después de clases..."></textarea>
+                </div>
+                
+                <button type="submit">🚀 Publicar Viaje</button>
+            </form>
+        </div>
+        
+        <h2>📋 Viajes Registrados</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Conductor</th>
+                    <th>Ruta</th>
+                    <th>Fecha/Hora</th>
+                    <th>Asientos</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="v : ${viajes}">
+                    <td th:text="${v.id}"></td>
+                    <td th:text="${v.conductor.nombreCompleto}"></td>
+                    <td>
+                        <strong th:text="${v.origen}"></strong> → 
+                        <strong th:text="${v.destino}"></strong>
+                    </td>
+                    <td th:text="${#temporals.format(v.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${v.asientosDisponibles}"></td>
+                    <td>$<span th:text="${v.precio}"></span></td>
+                    <td>
+                        <span th:if="${v.estado == 'DISPONIBLE'}" class="badge badge-disponible">Disponible</span>
+                        <span th:if="${v.estado == 'COMPLETO'}" class="badge badge-completo">Completo</span>
+                        <span th:if="${v.estado == 'CANCELADO'}" class="badge badge-cancelado">Cancelado</span>
+                    </td>
+                    <td class="actions">
+                        <a th:href="@{'/viajes/cambiar-estado/' + ${v.id} + '?nuevoEstado=CANCELADO'}" 
+                           class="btn btn-estado"
+                           th:if="${v.estado != 'CANCELADO'}"
+                           onclick="return confirm('¿Cancelar este viaje?')">
+                            ❌ Cancelar
+                        </a>
+                        <a th:href="@{'/viajes/eliminar/' + ${v.id}}" 
+                           class="btn btn-eliminar"
+                           onclick="return confirm('¿Eliminar este viaje?')">
+                            🗑️ Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
