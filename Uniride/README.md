@@ -1,3 +1,7 @@
+## Proyecto Fundamentos Software
+
+UniRide es una aplicación web desarrollada en Spring Boot que facilita el transporte compartido entre estudiantes universitarios. La plataforma permite a los usuarios registrarse como conductores o pasajeros, publicar y buscar viajes según origen y destino, gestionar reservas de asientos con disponibilidad en tiempo real, y administrar el ciclo completo de viajes desde su creación hasta su finalización o cancelación. El sistema implementa autenticación segura con validación de correos institucionales, gestión automática de disponibilidad de asientos.
+
 ## Listado de Casos de Uso
 
 | #    | Nombre |
