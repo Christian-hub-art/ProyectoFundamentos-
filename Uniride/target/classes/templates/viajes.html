@@ -250,7 +250,7 @@
                         <span th:if="${v.estado == 'FINALIZADO'}" class="badge badge-finalizado">Finalizado</span>
                     </td>
                     <td class="actions">
-                        <!-- CU07 - Cancelar Viaje -->
+                     
                         <a th:href="@{'/viajes/cancelar/' + ${v.id}}" 
                            class="btn btn-cancelar"
                            th:if="${v.estado != 'CANCELADO' && v.estado != 'FINALIZADO'}"
